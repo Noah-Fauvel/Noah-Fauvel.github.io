@@ -1,0 +1,249 @@
+/* Portfolio de Noah Fauvel - feuille de style
+   Palette tirée de la photo : bleu nuit (fond du portrait) et kaki (hexagone).
+   Polices hébergées dans assets/fonts : aucun appel vers un service externe.
+   Thème clair ou sombre selon le réglage du système. */
+
+/* ---------- Polices ---------- */
+@font-face {
+  font-family: "Bricolage Grotesque";
+  src: url("../assets/fonts/bricolage-grotesque-latin-wght-normal.woff2") format("woff2");
+  font-weight: 200 800; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "IBM Plex Sans";
+  src: url("../assets/fonts/ibm-plex-sans-latin-400-normal.woff2") format("woff2");
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "IBM Plex Sans";
+  src: url("../assets/fonts/ibm-plex-sans-latin-500-normal.woff2") format("woff2");
+  font-weight: 500; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "IBM Plex Sans";
+  src: url("../assets/fonts/ibm-plex-sans-latin-600-normal.woff2") format("woff2");
+  font-weight: 600; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "IBM Plex Sans";
+  src: url("../assets/fonts/ibm-plex-sans-latin-400-italic.woff2") format("woff2");
+  font-weight: 400; font-style: italic; font-display: swap;
+}
+
+/* ---------- Couleurs et réglages ---------- */
+:root {
+  color-scheme: light dark;
+
+  /* Bleu nuit = couleur de fond exacte du portrait */
+  --navy: #29394d;
+  --navy-deep: #1c2836;
+  --khaki: #c4b68f;
+
+  /* Sur fond de page (change selon le thème) */
+  --bg: light-dark(#f4f5f3, #111923);
+  --panel: light-dark(#ffffff, #192330);
+  --text: light-dark(#1d2733, #e8ecef);
+  --soft: light-dark(#505c68, #aebac5);
+  --line: light-dark(#d6dad6, #2f3b49);
+  --titre: light-dark(#29394d, #f1f3f5);
+  --accent: light-dark(#5e5624, #cdbf95);   /* petits textes colorés */
+  --mark: light-dark(#8c8140, #c4b68f);     /* traits et repères */
+  --focus: light-dark(#29394d, #c4b68f);
+
+  /* Sur fond bleu nuit (identique dans les deux thèmes) */
+  --sur-nuit: #eef1f4;
+  --sur-nuit-doux: #c3ccd6;
+
+  --font-titre: "Bricolage Grotesque", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --font-texte: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --gutter: 36px;
+  --largeur-max: 1040px;
+  --marge: max(var(--gutter), calc((100% - var(--largeur-max)) / 2));
+  --hexagone: polygon(25% 5%, 75% 5%, 100% 50%, 75% 95%, 25% 95%, 0 50%);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+/* les bandeaux pleine largeur dépassent volontairement du cadre : on évite le défilement horizontal */
+html { scroll-behavior: smooth; overflow-x: hidden; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-texte);
+  font-size: 17px;
+  line-height: 1.65;
+}
+
+/* ---------- Texte ---------- */
+h1, h2, h3, h4 { font-family: var(--font-titre); color: var(--titre); text-wrap: balance; }
+h2 { font-size: clamp(1.9rem, 3.6vw, 2.6rem); font-weight: 650; line-height: 1.1; letter-spacing: -.02em; margin: 0 0 18px; }
+h3 { font-size: 1.4rem; font-weight: 600; line-height: 1.25; letter-spacing: -.01em; margin: 36px 0 10px; }
+h4 { font-family: var(--font-texte); font-size: .95rem; font-weight: 600; color: var(--accent); margin: 24px 0 4px; }
+p { margin: 0 0 16px; }
+ul, ol { margin: 0 0 16px; padding-left: 22px; }
+li { margin-bottom: 6px; }
+li > p { margin-bottom: 6px; }
+main p, main ul, main ol { max-width: 68ch; }
+p, li, blockquote { text-wrap: pretty; }
+strong { font-weight: 600; }
+cite { font-style: italic; }
+
+a { color: var(--titre); text-decoration: underline; text-decoration-color: var(--mark); text-decoration-thickness: 2px; text-underline-offset: 3px; }
+a:hover { text-decoration-color: currentColor; }
+a:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; border-radius: 2px; }
+
+.eyebrow { font-size: .95rem; font-weight: 500; color: var(--accent); margin: 0 0 8px; }
+.lead { font-size: 1.2rem; line-height: 1.55; color: var(--soft); max-width: 62ch; margin-bottom: 24px; }
+.category { font-size: .9rem; font-weight: 500; color: var(--accent); margin: 0 0 8px; }
+.date { font-family: var(--font-titre); font-size: 1.05rem; font-weight: 600; color: var(--accent); margin: 0 0 4px; }
+
+/* ---------- Lien d'évitement ---------- */
+.skip-link {
+  position: absolute; left: 12px; top: -80px; z-index: 20;
+  background: var(--khaki); color: var(--navy-deep);
+  padding: 10px 14px; border-radius: 4px; font-weight: 600;
+}
+.skip-link:focus { top: 12px; }
+
+/* ---------- En-tête et navigation ---------- */
+.site-header {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 6px 32px;
+  padding: 14px var(--marge);
+  background: var(--navy); color: var(--sur-nuit);
+}
+.brand {
+  color: var(--sur-nuit); text-decoration: none;
+  font-family: var(--font-titre); font-size: 1.3rem; font-weight: 650; line-height: 1.2;
+}
+.brand span { display: block; font-family: var(--font-texte); font-size: .8rem; font-weight: 400; color: var(--khaki); }
+.site-header nav { margin-left: auto; }
+.site-header nav ul { display: flex; flex-wrap: wrap; gap: 0 22px; list-style: none; margin: 0; padding: 0; max-width: none; }
+.site-header nav li { margin: 0; }
+.site-header nav a {
+  display: block; padding: 10px 0; font-size: .92rem;
+  color: var(--sur-nuit-doux); text-decoration: none;
+  border-bottom: 2px solid transparent;
+}
+.site-header nav a:hover { color: #fff; border-bottom-color: var(--khaki); }
+.site-header a:focus-visible, #contact a:focus-visible { outline-color: var(--khaki); }
+
+/* Navigation fixe en haut sur grand écran */
+@media (min-width: 900px) {
+  .site-header { position: sticky; top: 0; z-index: 10; }
+}
+
+/* ---------- Contenu ---------- */
+main { max-width: calc(var(--largeur-max) + 2 * var(--gutter)); margin: 0 auto; padding: 0 var(--gutter); }
+main > section { padding: 72px 0; border-top: 1px solid var(--line); scroll-margin-top: 64px; }
+main > section > h2:first-of-type { margin-top: 0; }
+
+/* Accueil : bandeau bleu nuit pleine largeur, portrait posé sur son bord bas */
+#accueil { padding-top: 0; border-top: 0; }
+.hero {
+  display: grid; grid-template-columns: minmax(0, 1fr) 242px; gap: 48px; align-items: end;
+  position: relative; isolation: isolate; color: var(--sur-nuit);
+  margin-bottom: 64px;
+}
+.hero::before, #contact::before {
+  content: ""; position: absolute; z-index: -1; inset: 0 calc(50% - 50vw);
+  background: var(--navy);
+}
+.hero-texte { padding: 72px 0 64px; }
+.hero h1 {
+  font-size: clamp(2.5rem, 5.6vw, 4.2rem); font-weight: 700; line-height: 1.02;
+  letter-spacing: -.035em; color: #fff; margin: 0 0 24px; max-width: 14ch;
+}
+.hero .eyebrow { color: var(--khaki); font-size: 1rem; }
+.hero .lead { color: var(--sur-nuit-doux); margin-bottom: 0; }
+.portrait { display: block; width: 100%; max-width: 242px; height: auto; }
+
+#accueil > h2 { font-size: 1.6rem; margin: 44px 0 10px; }
+#accueil > h2:first-of-type { margin-top: 0; }
+
+/* Deux colonnes sur grand écran, une seule sur mobile */
+.grid-2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 40px; margin: 28px 0; }
+.grid-2 > article, .grid-2 > div { border-top: 3px solid var(--mark); padding-top: 14px; }
+.grid-2 h3, .grid-2 h4 { margin-top: 0; }
+.grid-2 h3 { font-size: 1.25rem; }
+.grid-2 h4 { font-size: 1rem; color: var(--titre); font-family: var(--font-titre); font-weight: 600; }
+
+/* ---------- Parcours : frise avec repères en hexagone ---------- */
+.timeline { list-style: none; margin: 36px 0 28px; padding: 0 0 0 6px; max-width: none; }
+.timeline li { position: relative; margin: 0; padding: 0 0 34px 34px; border-left: 2px solid var(--line); }
+.timeline li:last-child { padding-bottom: 6px; }
+.timeline li::before {
+  content: ""; position: absolute; left: -9px; top: 3px; width: 16px; height: 16px;
+  background: var(--mark); clip-path: var(--hexagone);
+}
+.timeline h3 { margin: 0 0 8px; font-size: 1.25rem; }
+.timeline p:not(.date) { margin: 0; }
+
+/* ---------- Projets et expériences ---------- */
+.projet {
+  background: var(--panel); border: 1px solid var(--line); border-radius: 8px;
+  padding: 12px clamp(20px, 4vw, 44px) 24px; margin: 36px 0;
+}
+.projet > h3 { margin-top: 0; font-size: 1.7rem; }
+.projet .category { margin-top: 26px; }
+.projet p, .projet ul, .projet ol { max-width: 66ch; }
+.projet img {
+  display: block; width: 100%; max-width: none; height: auto;
+  border-radius: 6px; border: 1px solid var(--line); margin: 20px 0 24px;
+}
+.experience { border-left: 4px solid var(--mark); padding: 2px 0 2px 26px; margin: 36px 0; }
+.experience > h3 { margin-top: 0; }
+
+/* ---------- Compétences : trois colonnes, repère en hexagone ---------- */
+.competences { list-style: none; padding: 0; margin: 32px 0; max-width: none; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 36px; }
+.competences li { margin: 0; }
+.competences li::before {
+  content: ""; display: block; width: 34px; height: 34px; margin-bottom: 14px;
+  background: light-dark(var(--navy), var(--khaki)); clip-path: var(--hexagone);
+}
+.competences h3 { margin: 0 0 10px; font-size: 1.3rem; }
+
+/* ---------- Contact : bandeau bleu nuit, comme l'accueil ---------- */
+#contact { position: relative; isolation: isolate; color: var(--sur-nuit); border-top: 0; }
+#contact .eyebrow { color: var(--khaki); }
+#contact h2 { color: #fff; }
+#contact p { color: var(--sur-nuit-doux); font-size: 1.1rem; }
+#contact ul { list-style: none; padding: 0; margin-top: 24px; }
+#contact li { font-size: 1.25rem; margin-bottom: 10px; }
+#contact a { color: var(--khaki); text-decoration-color: var(--khaki); }
+#contact a:hover { color: #fff; }
+
+/* ---------- Pied de page ---------- */
+.site-footer { padding: 22px var(--marge); background: var(--navy-deep); color: var(--sur-nuit-doux); font-size: .85rem; }
+.site-footer p { margin: 0; }
+
+/* ---------- Tablette et mobile ---------- */
+@media (max-width: 899px) {
+  .site-header nav { margin-left: 0; width: 100%; }
+  .site-header nav ul { gap: 0 18px; }
+  .competences { grid-template-columns: 1fr; gap: 28px; }
+}
+
+@media (max-width: 700px) {
+  :root { --gutter: 20px; }
+  body { font-size: 16px; }
+  main > section { padding: 52px 0; }
+  .hero { grid-template-columns: 1fr; gap: 0; margin-bottom: 44px; }
+  .hero-texte { padding: 40px 0 32px; }
+  .portrait { max-width: 190px; }
+  .grid-2 { grid-template-columns: 1fr; gap: 0; }
+  .grid-2 > div, .grid-2 > article { margin-bottom: 18px; }
+  .projet { padding-top: 6px; }
+  .projet > h3 { font-size: 1.45rem; }
+}
+
+/* ---------- Impression ---------- */
+@media print {
+  .skip-link, .site-header nav { display: none; }
+  body { background: #fff; color: #000; }
+  .hero::before, #contact::before { display: none; }
+  .hero, #contact { color: #000; }
+}
